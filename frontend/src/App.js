@@ -21,6 +21,8 @@ import './globals.css';
 // Chart colors
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d']; // Used only for demo/patients chart. All theme tokens are in globals.css.
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,11 +52,11 @@ function App() {
     const fetchData = async () => {
       try {
         const [patientsRes, alertsRes, performanceRes, financialRes, tablesRes] = await Promise.all([
-          axios.get('http://localhost:4000/api/patients'),
-          axios.get('http://localhost:4000/api/alerts'),
-          axios.get('http://localhost:4000/api/performance'),
-          axios.get('http://localhost:4000/api/financial'),
-          axios.get('http://localhost:4000/api/tables')
+          axios.get(`${API_URL}/api/patients`),
+          axios.get(`${API_URL}/api/alerts`),
+          axios.get(`${API_URL}/api/performance`),
+          axios.get(`${API_URL}/api/financial`),
+          axios.get(`${API_URL}/api/tables`)
         ]);
         
         setPatients(patientsRes.data);
@@ -78,7 +80,7 @@ function App() {
     if (selectedTable) {
       const fetchTableData = async () => {
         try {
-          const response = await axios.get(`http://localhost:4000/api/table/${selectedTable}`);
+          const response = await axios.get(`${API_URL}/api/table/${selectedTable}`);
           setTableData(response.data);
         } catch (err) {
           console.error(`Error fetching data for table ${selectedTable}:`, err);
