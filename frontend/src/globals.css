@@ -1,5 +1,5 @@
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/preflight";
+
 @tailwind utilities;
 
 /* Dashboard compact font utilities */
@@ -170,4 +170,3 @@
     @apply bg-background text-foreground;
   }
 }
-

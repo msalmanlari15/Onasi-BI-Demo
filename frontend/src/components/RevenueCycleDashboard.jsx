@@ -25,6 +25,8 @@ import PendingClaimsAgingChart from './charts/PendingClaimsAgingChart';
 // Import constants and utilities
 import { PRIMARY_COLOR } from '../constants/colors';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
 export function RevenueCycleDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -146,7 +148,7 @@ export function RevenueCycleDashboard() {
   const fetchFinancialData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:4000/api/financial');
+      const response = await axios.get(`${API_URL}/api/financial`);
       const data = response.data;
       console.log('Raw API data sample:', data.slice(0, 3));
       console.log('API data fields:', data.length > 0 ? Object.keys(data[0]) : 'No data');
@@ -847,4 +849,3 @@ export function RevenueCycleDashboard() {
     </div>
   );
 }
-
