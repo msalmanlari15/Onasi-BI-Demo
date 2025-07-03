@@ -5,19 +5,13 @@ const path = require('path');
 const initSqlJs = require('sql.js');
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 // Enable CORS for all routes
 app.use(cors());
 
 // Parse JSON request body
 app.use(express.json());
-
-// Only serve static files if the build directory exists
-const buildPath = path.join(__dirname, '../frontend/build');
-if (fs.existsSync(buildPath)) {
-  app.use(express.static(buildPath));
-}
 
 // Initialize the database
 let db;
@@ -146,16 +140,10 @@ app.get('/api/performance', (req, res) => {
   }
 });
 
-// Catch-all handler to serve the React app in production only if the build directory exists
+// Catch-all handler to return a 404 for non-API routes
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, '../frontend/build', 'index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    // If the build directory doesn't exist, return a 404 for non-API routes
-    if (!req.path.startsWith('/api/')) {
-      res.status(404).json({ error: 'Not found' });
-    }
+  if (!req.path.startsWith('/api/')) {
+    res.status(404).json({ error: 'Not found' });
   }
 });
 
