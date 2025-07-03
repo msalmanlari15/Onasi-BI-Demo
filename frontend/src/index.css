@@ -1,4 +1,4 @@
-@import "tailwindcss/preflight";
+@tailwind base;
 @tailwind utilities;
 
 /* Theme tokens removed. All theme variables are now in globals.css. */
